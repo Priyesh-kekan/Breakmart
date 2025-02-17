@@ -5,7 +5,7 @@ import AccountBilling from "./SettingsComponent/AccountBilling";
 import LeaveType from "./SettingsComponent/LeaveType";
 import DepartmentPanel from "./SettingsComponent/DepartmentPanel";
 import BreaksPanel from "./SettingsComponent/BreaksPanel";
-import ProductivityMapping from "./ProductivityComponents/ProductivityMappingpage";
+import ProductivityMapping from "./ProductivityComponents/ProductivityMappingpage.jsx";
 import UserManagementPanel from "./SettingsComponent/UserManagementPanel";
 import TeamsManagementPanel from "./SettingsComponent/TeamsManagementPanel";
 import ShiftManagementPanel from "./SettingsComponent/ShiftManagementpanel"
