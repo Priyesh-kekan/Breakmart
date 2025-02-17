@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Header from '../Header';
 
 const ProductivityMappingPage = () => {
     const departments = [
@@ -73,6 +74,7 @@ const ProductivityMappingPage = () => {
 
   return (
     <div className="w-full max-w-6xl bg-gray-50 rounded-lg p-4">
+      <Header title="Productivity Mapping" />
       {/* Main Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">

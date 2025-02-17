@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 const ImportCSVDialog = ({ isOpen, onClose }) => {
   const [selectedFile, setSelectedFile] = useState('');  // Added state for file input
 
-  if (!isOpen) return null;
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {

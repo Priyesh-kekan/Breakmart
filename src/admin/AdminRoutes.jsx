@@ -1,4 +1,4 @@
-import { AiFillHome, AiOutlineCalendar, AiOutlineHeart, AiOutlineLineChart, AiOutlineCamera, AiOutlineFileText, AiOutlineUnorderedList, AiOutlineSetting, AiOutlineUser, AiOutlineProject, AiOutlineClockCircle, AiOutlineBulb, AiOutlineBook, AiOutlinePlayCircle } from 'react-icons/ai';
+import { AiFillHome, AiOutlineCalendar, AiOutlineHeart, AiOutlineLineChart, AiOutlineCamera, AiOutlineFileText, AiOutlineUnorderedList, AiOutlineSetting, AiOutlineUser, AiOutlineProject, AiOutlineClockCircle, AiOutlineBulb, AiOutlineBook, AiOutlinePlayCircle, AiFillCrown } from 'react-icons/ai';
 import Dashboard from "./components/Dashboard.jsx";
 import WellnessPanel from "./components/WellnessPanel.jsx";
 import ProductivityPanel from "./components/ProductivityPanel.jsx";
@@ -13,6 +13,7 @@ import ActivityPanel from './components/ActivityPanel.jsx';
 import NotesPanel from './components/NotesPanel.jsx';
 import AttendanceDashboard from './components/AttendanceDashboard.jsx';
 import LiveStreamPanel from './components/LiveStreamPanel.jsx';
+import SuperAdminPanel from './components/SuperAdminPanel';
 
 const AdminRoutes = [
   { path: "/admin/", component: <Dashboard />, label: "Dashboard", icon: <AiFillHome /> },
@@ -29,6 +30,7 @@ const AdminRoutes = [
   { path: "/admin/ReportPanel", component: <ReportPanel />, label: "Reports", icon: <AiOutlineFileText /> },
   { path: "/admin/LeavesPanel", component: <LeavesPanel />, label: "Leaves", icon: <AiOutlineUser /> },
   { path: "/admin/SettingsPanel", component: <SettingsPanel />, label: "Settings", icon: <AiOutlineSetting /> },
+  { path: "/admin/superadmin", component: <SuperAdminPanel />, label: "Super Admin", icon: <AiFillCrown />, role: "superadmin" },
 ];
 
 export default AdminRoutes;

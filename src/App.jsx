@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import AdminDashboard from "./admin/AdminDashboard";
 import UserPanel from "./user/UserPanel";
 
@@ -42,39 +42,16 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// Admin Panel Button Component
-const AdminPanelButton = () => {
-  const navigate = useNavigate();
-  
-  return (
-    <div style={{ position: "fixed", top: "10px", right: "10px" }}>
-      <button 
-        onClick={() => navigate("/admin")} 
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}
-      >
-        Admin Panel
-      </button>
-    </div>
-  );
-};
-
 const App = () => {
   return (
     <ErrorBoundary>
       <Router>
-        <AdminPanelButton /> {/* Admin Panel Button is always visible */}
         <Routes>
           {/* Admin Panel Routes */}
           <Route path="/admin" element={<AdminDashboard />} />
           {/* User Panel Routes */}
           <Route path="/" element={<UserPanel />} />
+          
           {/* Default Route for 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>

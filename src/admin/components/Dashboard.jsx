@@ -2,11 +2,11 @@ import React from "react";
 import Header from "./Header";
 import ActivityTrendChart from "./DashboardComponents/ActivityTrendChart";
 import AppUsageChart from "./DashboardComponents/AppUsageChart";
-import AttendancePanel from "./DashboardComponents/AttendancePanel";
+import AttendanceChart from "./DashboardComponents/AttendanceChart";
 import Snapshots from "./DashboardComponents/Snapshots";
 import DashboardNavbar from "./DashboardComponents/DashboardNavbar";
 
-function Dashboard() {
+const Dashboard = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Fixed Header */}
@@ -22,7 +22,7 @@ function Dashboard() {
         {/* Grid Layout for Panels */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 pb-20">
           {/* Row 1 */}
-          <AttendancePanel />
+          <AttendanceChart />
           <ActivityTrendChart />
 
           {/* Row 2 */}

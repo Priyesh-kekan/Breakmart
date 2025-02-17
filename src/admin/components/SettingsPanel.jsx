@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import Header from "./Header";
 import SettingsNavbar from "./SettingsComponent/SettingsNavbar";
 import AccountBilling from "./SettingsComponent/AccountBilling";
 import LeaveType from "./SettingsComponent/LeaveType";
 import DepartmentPanel from "./SettingsComponent/DepartmentPanel";
 import BreaksPanel from "./SettingsComponent/BreaksPanel";
-import ProductivityMappingPage from "./ProductivityComponents/ProductivityMappingPage";
+import ProductivityMapping from "./ProductivityComponents/ProductivityMappingpage";
 import UserManagementPanel from "./SettingsComponent/UserManagementPanel";
-import Header from "./Header";
+import TeamsManagementPanel from "./SettingsComponent/TeamsManagementPanel";
+import ShiftManagementPanel from "./SettingsComponent/ShiftManagementpanel"
 import {
   FaMoneyBill,
   FaCoffee,
@@ -15,6 +17,7 @@ import {
   FaCheckCircle,
   FaBuilding,
   FaTasks,
+  FaShieldAlt,
   FaUsers,
   FaFilter,
   FaBolt,
@@ -91,7 +94,7 @@ const settingsItems = [
   },
 ];
 
-const SettingsPanel = () => {
+const SettingsPanel = ({ isSidebarVisible }) => {  // Add this prop
   const [selectedSetting, setSelectedSetting] = useState(null);
 
   const handleBack = () => {
@@ -114,12 +117,17 @@ const SettingsPanel = () => {
       case "breaks":
         return <BreaksPanel />;
       case "productivity-mapping":
-        return <ProductivityMappingPage />;
+        return <ProductivityMapping />;
       case "user-management":
-        return <UserManagementPanel />;
+        return <UserManagementPanel isSidebarVisible={isSidebarVisible} />;
+      case "team-management":
+        return <TeamsManagementPanel />;
+        case "shift":
+        return <ShiftManagementPanel />;
       default:
         return (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            <Header title="Settings" />
             {settingsItems.map((item, index) => (
               <div
                 key={index}
@@ -140,10 +148,8 @@ const SettingsPanel = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* Header */}
-      <Header />
       {/* Sticky Navbar */}
-      <div className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="sticky top-0 z-40 bg-white shadow-md">
         <SettingsNavbar />
         {selectedSetting && (
           <div className="flex items-center p-4 border-b">
@@ -159,7 +165,7 @@ const SettingsPanel = () => {
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div>
         {renderContent()}
       </div>
     </div>

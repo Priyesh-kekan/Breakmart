@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import UserManagementNavbar from "./UserManagementComponent/UserManagementNavbar"
 import UserTable from "./UserManagementComponent/UserTable";
+import Header from '../Header';
 
-const UserManagementPanel = () => {
+const UserManagementPanel = ({ isSidebarVisible }) => {
     const [users] = useState([
       {
         id: 1,
@@ -116,46 +117,20 @@ const UserManagementPanel = () => {
     };
     
     return (
-        <div className="min-h-screen bg-gray-100">
-            <UserManagementNavbar totalUsers={users.length} onAddUser={handleAddUser} />
-            {/* Added horizontal bar with summary stats */}
-            <div className="bg-white border-b shadow-sm">
-                <div className="max-w-full mx-auto px-4 py-3">
-                    <div className="flex items-center justify-between space-x-8">
-                        <div className="flex items-center space-x-4">
-                            <div className="text-sm">
-                                <div className="text-gray-500">Total Users</div>
-                                <div className="font-semibold">{users.length}</div>
-                            </div>
-                            <div className="text-sm">
-                                <div className="text-gray-500">Active Users</div>
-                                <div className="font-semibold">
-                                    {users.filter(user => user.status === 'Active').length}
-                                </div>
-                            </div>
-                            <div className="text-sm">
-                                <div className="text-gray-500">Departments</div>
-                                <div className="font-semibold">
-                                    {new Set(users.map(user => user.department)).size}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <div className="text-sm">
-                                <div className="text-gray-500">Last Updated</div>
-                                <div className="font-semibold">
-                                    {new Date().toLocaleDateString()}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="p-4">
+      <div className="min-h-screen bg-gray-100">
+        <Header title="User Management" isSidebarVisible={isSidebarVisible} />
+        <div className={`transition-all duration-300 ${isSidebarVisible ? 'overflow-x-auto' : 'overflow-x-hidden'}`}>
+          <UserManagementNavbar totalUsers={users.length} onAddUser={handleAddUser} />
+          <div className="p-4">
+            <div className="border rounded-lg shadow bg-white">
+              <div className="overflow-x-auto">
                 <UserTable users={users} />
+              </div>
             </div>
+          </div>
         </div>
-    );
+      </div>
+  );
 };
 
 export default UserManagementPanel;
