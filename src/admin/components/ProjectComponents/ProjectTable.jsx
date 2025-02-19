@@ -19,7 +19,7 @@ const ProjectTable = ({ projects, activeView, searchQuery, onProjectClick }) => 
 
   return (
     <div className="p-4">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto overflow-y-auto">
         <table className="min-w-full bg-[#C1C1C1] shadow-lg rounded-lg">
           <thead className="bg-gray-200">
             <tr>

@@ -8,7 +8,7 @@ const AttendanceNavbar = () => {
   return (
     <div>
       {/* Navbar */}
-      <div className="flex items-center justify-between bg-[#C1C1C1] p-4 text-[#3B3F70]">
+      <div className="flex items-center justify-between bg-[#C1C1C1] p-4 text-[#3B3F70] sticky top-0 z-20">
         <h2 className="text-xl font-bold">Attendance</h2>
 
         <div className="flex space-x-4">

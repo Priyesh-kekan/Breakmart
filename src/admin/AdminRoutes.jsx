@@ -17,8 +17,8 @@ import SuperAdminPanel from './components/SuperAdminPanel';
 
 const AdminRoutes = [
   { path: "/admin/", component: <Dashboard />, label: "Dashboard", icon: <AiFillHome /> },
-  { path: "/admin/AttendanceDashboard", component: <AttendanceDashboard />, label: "Attendance", icon: <AiOutlineCalendar /> },
   { path: "/admin/LiveStreamPanel", component: <LiveStreamPanel />, label: "LiveStream", icon: <AiOutlinePlayCircle /> },
+  { path: "/admin/AttendanceDashboard", component: <AttendanceDashboard />, label: "Attendance", icon: <AiOutlineCalendar /> },
   { path: "/admin/WellnessPanel", component: <WellnessPanel />, label: "Wellness", icon: <AiOutlineHeart /> },
   { path: "/admin/TimelinePanel", component: <TimelinePanel />, label: "Timeline", icon: <AiOutlineClockCircle /> },
   { path: "/admin/ProductivityPanel", component: <ProductivityPanel />, label: "Productivity", icon: <AiOutlineLineChart /> },

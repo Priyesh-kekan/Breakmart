@@ -12,9 +12,6 @@ const SuperAdminPanel = () => {
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
-      <div className="p-6">
-        
-      </div>
     </div>
   );
 };

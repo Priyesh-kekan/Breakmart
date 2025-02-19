@@ -1,7 +1,7 @@
 import React from "react";
 import { FaDownload, FaCalendarAlt, FaSyncAlt } from "react-icons/fa";
 
-const MonthlyAttendanceNavbar = () => {
+const MonthlyAttendanceNavbar = ({ onRefresh, isRefreshing }) => {
   return (
     <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md sticky top-[60px] z-9">
       {/* Left Side - Title */}
@@ -10,19 +10,19 @@ const MonthlyAttendanceNavbar = () => {
       {/* Right Side - Buttons */}
       <div className="flex items-center space-x-3">
         {/* Download Button */}
-        <button className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm">
+        <button className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm hover:bg-gray-50">
           <FaDownload className="mr-2" />
         </button>
 
         {/* Select Dropdown */}
-        <select className="border px-4 py-2 rounded bg-white text-gray-700 shadow-sm">
+        <select className="border px-4 py-2 rounded bg-white text-gray-700 shadow-sm hover:bg-gray-50">
           <option>Select...</option>
           <option value="option1">Option 1</option>
           <option value="option2">Option 2</option>
         </select>
 
         {/* Date Picker */}
-        <div className="relative flex items-center border rounded px-3 py-2 bg-white text-gray-700 shadow-sm">
+        <div className="relative flex items-center border rounded px-3 py-2 bg-white text-gray-700 shadow-sm hover:bg-gray-50">
           <FaCalendarAlt className="mr-2 text-gray-500" />
           <input
             type="month"
@@ -32,8 +32,14 @@ const MonthlyAttendanceNavbar = () => {
         </div>
 
         {/* Refresh Button */}
-        <button className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm">
-          <FaSyncAlt />
+        <button 
+          className={`flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm hover:bg-gray-50 transition-colors ${
+            isRefreshing ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          onClick={onRefresh}
+          disabled={isRefreshing}
+        >
+          <FaSyncAlt className={isRefreshing ? 'animate-spin' : ''} />
         </button>
       </div>
     </div>

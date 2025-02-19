@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import Header from '../Header';
 
 const ProductivityMappingPage = () => {
-    const departments = [
-      'C-SUITE',
-      'CUSTOMER SUCCESS',
-      'Client sales',
-      'Data entry',
-      'EXTRA/TEST',
-      'Enterprise Team',
-      'Events',
-      'Marketing',
-      'Human Resources',
-      'Engineering',
-      'Product Management',
-      'Finance',
-      'Legal',
-      'Operations',
-    ];
+  const departments = [
+    'C-SUITE',
+    'CUSTOMER SUCCESS',
+    'Client sales',
+    'Data entry',
+    'EXTRA/TEST',
+    'Enterprise Team',
+    'Events',
+    'Marketing',
+    'Human Resources',
+    'Engineering',
+    'Product Management',
+    'Finance',
+    'Legal',
+    'Operations',
+  ];
 
   const initialLabels = [
     { 
@@ -38,56 +38,80 @@ const ProductivityMappingPage = () => {
     },
   ];
 
+  // Initialize state with a map of department to labels
+  const [departmentLabels, setDepartmentLabels] = useState(() => {
+    const labelMap = {};
+    departments.forEach(dept => {
+      labelMap[dept] = [...initialLabels];
+    });
+    return labelMap;
+  });
+
   const [selectedDepartment, setSelectedDepartment] = useState('C-SUITE');
-  const [labels, setLabels] = useState(initialLabels);
   const [showDialog, setShowDialog] = useState(false);
   const [newLabel, setNewLabel] = useState({
     name: '',
     description: ''
   });
 
-  const handleStateClick = (labelIndex, stateType) => {
-    setLabels(prevLabels => {
-      const newLabels = [...prevLabels];
-      newLabels[labelIndex] = {
-        ...newLabels[labelIndex],
+  const handleStateClick = (labelIndex, selectedState) => {
+    setDepartmentLabels(prevDepartmentLabels => {
+      const newDepartmentLabels = { ...prevDepartmentLabels };
+      const departmentLabelsCopy = [...newDepartmentLabels[selectedDepartment]];
+      
+      const resetStates = {
+        productive: false,
+        neutral: false,
+        unproductive: false
+      };
+      
+      departmentLabelsCopy[labelIndex] = {
+        ...departmentLabelsCopy[labelIndex],
         states: {
-          ...newLabels[labelIndex].states,
-          [stateType]: !newLabels[labelIndex].states[stateType]
+          ...resetStates,
+          [selectedState]: !departmentLabelsCopy[labelIndex].states[selectedState]
         }
       };
-      return newLabels;
+      
+      newDepartmentLabels[selectedDepartment] = departmentLabelsCopy;
+      return newDepartmentLabels;
     });
   };
 
   const handleAddLabel = (e) => {
     e.preventDefault();
     if (newLabel.name.trim()) {
-      setLabels(prevLabels => [...prevLabels, {
-        name: newLabel.name.trim(),
-        states: { productive: false, neutral: false, unproductive: false }
-      }]);
+      setDepartmentLabels(prevDepartmentLabels => ({
+        ...prevDepartmentLabels,
+        [selectedDepartment]: [
+          ...prevDepartmentLabels[selectedDepartment],
+          {
+            name: newLabel.name.trim(),
+            states: { productive: false, neutral: false, unproductive: false }
+          }
+        ]
+      }));
       setNewLabel({ name: '', description: '' });
       setShowDialog(false);
     }
   };
 
   return (
-    <div className="w-full max-w-6xl bg-gray-50 rounded-lg p-4">
-      <Header title="Productivity Mapping" />
-      {/* Main Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <div className="text-blue-600 text-xl">⟳</div>
-          <h1 className="text-lg font-medium">Productivity Mapping</h1>
-          <div className="text-gray-400 cursor-help">ⓘ</div>
+    <div className="w-full bg-gray-50 rounded-lg p-4">
+      {/* Header with titles and add button */}
+      <div className="flex mb-6">
+        <div className="w-1/3">
+          <h2 className="text-lg font-medium text-gray-700">Departments</h2>
         </div>
-        <button 
-          onClick={() => setShowDialog(true)}
-          className="bg-gray-200 px-3 py-1 rounded text-sm hover:bg-gray-300"
-        >
-          Label Mapping
-        </button>
+        <div className="w-2/3 flex justify-between items-center">
+          <h2 className="text-lg font-medium text-gray-700">Labels</h2>
+          <button 
+            onClick={() => setShowDialog(true)}
+            className="bg-indigo-600 px-4 py-2 rounded text-sm text-white font-medium hover:bg-indigo-700 transition-colors duration-200 shadow-sm"
+          >
+            Add Label Mapping
+          </button>
+        </div>
       </div>
 
       {/* Add Label Dialog */}
@@ -168,7 +192,7 @@ const ProductivityMappingPage = () => {
 
         {/* Labels Panel */}
         <div className="w-2/3 bg-white rounded-lg shadow-sm overflow-y-auto max-h-[600px]">
-          {labels.map((label, labelIndex) => (
+          {departmentLabels[selectedDepartment].map((label, labelIndex) => (
             <div key={labelIndex} className="px-4 py-3 border-b flex items-center justify-between">
               <span className="text-gray-700">{label.name}</span>
               <div className="flex gap-2">

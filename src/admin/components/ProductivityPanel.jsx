@@ -10,7 +10,7 @@ const ProductivityPanel = () => {
       {/* Fixed Header */}
       <Header />
       {/* Fixed Navbar Positioned Below Header */}
-      <div className="sticky top-0 left-0 right-0 z-10">
+      <div className="sticky top-0 z-10">
         <ProductivityNavbar />
       </div>
 
