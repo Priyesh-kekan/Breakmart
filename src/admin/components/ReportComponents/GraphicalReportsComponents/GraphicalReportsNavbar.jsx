@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSyncAlt } from "react-icons/fa";
 
-const GraphicalReportsNavbar = ({ onGraphSelect, selectedGraph }) => {
+const GraphicalReportsNavbar = ({ onGraphSelect, selectedGraph, onRefresh }) => {
+  const [isSpinning, setIsSpinning] = useState(false);
   const handleGraphChange = (event) => {
     onGraphSelect(event.target.value);
+  };
+
+  const handleRefreshClick = () => {
+    setIsSpinning(true);
+    onRefresh();
+    setTimeout(() => setIsSpinning(false), 1500);
   };
 
   return (
@@ -38,12 +45,14 @@ const GraphicalReportsNavbar = ({ onGraphSelect, selectedGraph }) => {
         )}
 
         {/* Refresh Button */}
-        <button className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm">
-          <FaSyncAlt />
+        <button 
+          onClick={handleRefreshClick}
+          className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm hover:bg-gray-50 active:bg-gray-100 transition-colors"
+        >
+          <FaSyncAlt className={isSpinning ? "animate-spin" : ""} />
         </button>
       </div>
     </div>
   );
 };
-
 export default GraphicalReportsNavbar;

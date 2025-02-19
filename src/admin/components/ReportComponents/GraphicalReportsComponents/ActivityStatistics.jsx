@@ -1,15 +1,15 @@
 import React from "react";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid, ComposedChart } from "recharts";
 
-const data = [
-  { date: "Dec 20", activity: 25, idle: 5, activityTime: 30 },
-  { date: "Dec 19", activity: 75, idle: 25, activityTime: 100 },
-  { date: "Dec 18", activity: 50, idle: 10, activityTime: 60 },
-  { date: "Dec 17", activity: 60, idle: 15, activityTime: 75 },
-  { date: "Dec 16", activity: 80, idle: 20, activityTime: 100 },
-  { date: "Dec 15", activity: 85, idle: 22, activityTime: 107 },
-  { date: "Dec 14", activity: 90, idle: 25, activityTime: 115 },
-];
+const getRandomData = () => {
+  const dates = ["Dec 14", "Dec 15", "Dec 16", "Dec 17", "Dec 18", "Dec 19", "Dec 20"];
+  return dates.map(date => ({
+    date,
+    activity: Math.floor(Math.random() * 50) + 50, // 50-100
+    idle: Math.floor(Math.random() * 20) + 5, // 5-25
+    activityTime: Math.floor(Math.random() * 60) + 60 // 60-120
+  }));
+};
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -25,7 +25,9 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-const ActivityStatistics = () => {
+const ActivityStatistics = ({ refreshKey }) => {
+  const data = React.useMemo(() => getRandomData(), [refreshKey]);
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 w-full h-[420px] mt-4">
       <h2 className="text-lg font-bold text-[#3B3F70] mb-4">Activity Report</h2>
@@ -44,5 +46,4 @@ const ActivityStatistics = () => {
     </div>
   );
 };
-
 export default ActivityStatistics;

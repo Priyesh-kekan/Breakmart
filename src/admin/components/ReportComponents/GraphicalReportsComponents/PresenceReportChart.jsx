@@ -1,20 +1,18 @@
 import React from "react";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-// Sample data (Replace with dynamic data)
-const data = [
-  { date: "Nov 21", present: 30, absent: 15 },
-  { date: "Nov 25", present: 28, absent: 16 },
-  { date: "Nov 27", present: 10, absent: 30 },
-  { date: "Dec 01", present: 32, absent: 14 },
-  { date: "Dec 04", present: 5, absent: 50 },
-  { date: "Dec 07", present: 35, absent: 12 },
-  { date: "Dec 11", present: 8, absent: 45 },
-  { date: "Dec 15", present: 30, absent: 15 },
-  { date: "Dec 20", present: 25, absent: 18 },
-];
+const getRandomPresenceData = () => {
+  const dates = ["Nov 21", "Nov 25", "Nov 27", "Dec 01", "Dec 04", "Dec 07", "Dec 11", "Dec 15", "Dec 20"];
+  return dates.map(date => ({
+    date,
+    present: Math.floor(Math.random() * 30) + 5, // 5-35
+    absent: Math.floor(Math.random() * 40) + 10 // 10-50
+  }));
+};
 
-const PresenceReportChart = () => {
+const PresenceReportChart = ({ refreshKey }) => {
+  const data = React.useMemo(() => getRandomPresenceData(), [refreshKey]);
+
   return (
     <div className="bg-white p-4 shadow-md rounded-lg">
       <h2 className="text-lg font-bold text-black">Presence Report</h2>

@@ -1,12 +1,12 @@
 import React from "react";
 
-const DepartmentInsightsCard = ({ name, activityPercentage = 70 }) => {
+const DepartmentInsightsCard = ({ name, activityPercentage = 70, present = 30, absent = 10 }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-sm">
+    <div className="bg-white shadow-md rounded-lg p-4  w-full max-w-sm">
       <h3 className="text-lg font-semibold text-gray-800 text-center">{name}</h3>
       <div className="flex justify-between text-sm text-gray-500 mt-2 px-4">
-        <p className="text-green-600">30 Present</p>
-        <p className="text-blue-600">10 Absent</p>
+        <p className="text-green-600">{present} Present</p>
+        <p className="text-blue-600">{absent} Absent</p>
       </div>
       
       {/* Progress Bar */}
