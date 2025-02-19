@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaDownload, FaSyncAlt, FaCalendarAlt } from "react-icons/fa";
 
-const MonthlyInOutNavbar = () => {
+const MonthlyInOutNavbar = ({ onRefresh }) => {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefreshClick = () => {
+    setIsRefreshing(true);
+    onRefresh?.();
+    
+    // Stop the animation after 1.5 seconds
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1500);
+  };
+
   return (
     <div className="flex items-center justify-between bg-gray-100 shadow-md p-4 sticky top-[60px] z-9">
       {/* Title */}
@@ -11,8 +23,8 @@ const MonthlyInOutNavbar = () => {
       <div className="flex space-x-3">
         {/* Download Button */}
         <button className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm">
-                  <FaDownload className="mr-2" />
-                </button>
+          <FaDownload className="mr-2" />
+        </button>
 
         {/* Employee Selection Dropdown */}
         <select className="border px-3 py-2 rounded bg-white text-gray-600">
@@ -30,12 +42,14 @@ const MonthlyInOutNavbar = () => {
         </div>
 
         {/* Refresh Button */}
-         <button className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm">
-                  <FaSyncAlt />
-                </button>
+        <button 
+          onClick={handleRefreshClick}
+          className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm hover:bg-gray-50 active:bg-gray-100 transition-colors"
+        >
+          <FaSyncAlt className={isRefreshing ? "animate-spin" : ""} />
+        </button>
       </div>
     </div>
   );
 };
-
 export default MonthlyInOutNavbar;

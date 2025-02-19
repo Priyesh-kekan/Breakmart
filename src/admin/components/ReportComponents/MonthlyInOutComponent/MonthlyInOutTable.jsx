@@ -22,7 +22,7 @@ const getRandomTime = () => {
   return `${hours}:${minutes} ${amPm}`;
 };
 
-const MonthlyInOutTable = () => {
+const MonthlyInOutTable = ({ key }) => {
   return (
     <div className="bg-white p-4 shadow-md rounded-md mt-4">
       <table className="w-full border-collapse">
@@ -37,11 +37,11 @@ const MonthlyInOutTable = () => {
           </tr>
           <tr className="bg-gray-200 text-gray-700">
             <th className="p-2 border"></th>
-            {dates.map(() => (
-              <>
+            {dates.map((date) => (
+              <React.Fragment key={date}>
                 <th className="p-2 border">In</th>
                 <th className="p-2 border">Out</th>
-              </>
+              </React.Fragment>
             ))}
           </tr>
         </thead>
@@ -49,18 +49,21 @@ const MonthlyInOutTable = () => {
           {employees.map((employee, index) => (
             <tr key={index} className="text-center">
               <td className="p-2 border text-left font-semibold">{employee}</td>
-              {dates.map(() => {
-                const isAbsent = Math.random() > 0.7; // 30% chance of being absent
-                return isAbsent ? (
-                  <>
-                    <td className="p-2 border text-red-500 font-bold">❌</td>
-                    <td className="p-2 border text-red-500 font-bold">❌</td>
-                  </>
-                ) : (
-                  <>
-                    <td className="p-2 border text-green-600">{getRandomTime()}</td>
-                    <td className="p-2 border text-green-600">{getRandomTime()}</td>
-                  </>
+              {dates.map((date) => {
+                const isAbsent = Math.random() > 0.7;
+                return (
+                  <React.Fragment key={date}>
+                    <td className="p-2 border text-red-500 font-bold">
+                      {isAbsent ? "❌" : (
+                        <span className="text-green-600">{getRandomTime()}</span>
+                      )}
+                    </td>
+                    <td className="p-2 border text-red-500 font-bold">
+                      {isAbsent ? "❌" : (
+                        <span className="text-green-600">{getRandomTime()}</span>
+                      )}
+                    </td>
+                  </React.Fragment>
                 );
               })}
             </tr>
@@ -70,5 +73,4 @@ const MonthlyInOutTable = () => {
     </div>
   );
 };
-
 export default MonthlyInOutTable;

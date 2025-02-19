@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import { FaDownload, FaSyncAlt, FaCalendarAlt } from "react-icons/fa";
 
-const ApplicationReportNavbar = ({ onDateChange }) => {
+const ApplicationReportNavbar = ({ onDateChange, onRefresh }) => {
   const [startDate, setStartDate] = useState("2025-01-01");
   const [endDate, setEndDate] = useState("2025-01-31");
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
-    onDateChange(e.target.value, endDate); // Send to backend
+    onDateChange(e.target.value, endDate);
   };
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
-    onDateChange(startDate, e.target.value); // Send to backend
+    onDateChange(startDate, e.target.value);
+  };
+
+  const handleRefreshClick = () => {
+    setIsRefreshing(true);
+    onRefresh?.();
+    
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1500);
   };
 
   return (
@@ -46,12 +56,14 @@ const ApplicationReportNavbar = ({ onDateChange }) => {
         </div>
 
         {/* Refresh Button */}
-        <button className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm">
-          <FaSyncAlt />
+        <button 
+          onClick={handleRefreshClick}
+          className="flex items-center bg-white text-gray-600 px-3 py-2 rounded border shadow-sm hover:bg-gray-50 active:bg-gray-100 transition-colors"
+        >
+          <FaSyncAlt className={isRefreshing ? "animate-spin" : ""} />
         </button>
       </div>
     </div>
   );
 };
-
 export default ApplicationReportNavbar;
