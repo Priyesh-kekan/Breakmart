@@ -32,8 +32,11 @@ const AccountBilling = () => {
   const [autoPunchOut, setAutoPunchOut] = useState(9);
   const [isAutoPunchEnabled, setIsAutoPunchEnabled] = useState(true);
   const [wellnessValue, setWellnessValue] = useState(7);
+  const [lowerBound, setLowerBound] = useState(6);
+  const [upperBound, setUpperBound] = useState(9);
 
   const dropdownRef = useRef(null);
+  const sliderRef = useRef(null);
 
   // Handle click outside to close dropdown
   useEffect(() => {
@@ -64,6 +67,100 @@ const AccountBilling = () => {
     if (value <= 4) return "#ef4444";
     if (value <= 7) return "#22c55e";
     return "#f97316";
+  };
+
+  const handleSliderChange = (e, type) => {
+    const rect = sliderRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percentage = Math.round((x / rect.width) * 10);
+    const value = Math.max(0, Math.min(10, percentage));
+
+    if (type === 'lower' && value < upperBound) {
+      setLowerBound(value);
+    } else if (type === 'upper' && value > lowerBound) {
+      setUpperBound(value);
+    }
+  };
+
+  const renderWellness360 = () => {
+    const getBackgroundGradient = () => {
+      return `linear-gradient(to right, 
+        #E5E7EB 0%, #E5E7EB ${lowerBound * 10}%, 
+        #22c55e ${lowerBound * 10}%, #22c55e ${upperBound * 10}%, 
+        #f97316 ${upperBound * 10}%, #f97316 100%)`;
+    };
+
+    return (
+      <div>
+        <h3 className="text-lg font-medium mb-4">Wellness360</h3>
+        <div className="space-y-6">
+          <div className="relative pt-1" ref={sliderRef}>
+            {/* Track background */}
+            <div 
+              className="absolute w-full h-2 rounded-full"
+              style={{ background: getBackgroundGradient() }}
+            />
+            
+            {/* Lower bound slider */}
+            <div 
+              className="absolute w-5 h-5 bg-black rounded-full border-2 border-white cursor-pointer transform -translate-y-1/2 hover:scale-110 transition-transform"
+              style={{
+                left: `${lowerBound * 10}%`,
+                top: '50%',
+                marginLeft: '-10px',
+                zIndex: 30,
+              }}
+              onMouseDown={(e) => {
+                const handleMouseMove = (moveEvent) => handleSliderChange(moveEvent, 'lower');
+                const handleMouseUp = () => {
+                  document.removeEventListener('mousemove', handleMouseMove);
+                  document.removeEventListener('mouseup', handleMouseUp);
+                };
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+              }}
+            />
+
+            {/* Upper bound slider */}
+            <div 
+              className="absolute w-5 h-5 bg-black rounded-full border-2 border-white cursor-pointer transform -translate-y-1/2 hover:scale-110 transition-transform"
+              style={{
+                left: `${upperBound * 10}%`,
+                top: '50%',
+                marginLeft: '-10px',
+                zIndex: 30,
+              }}
+              onMouseDown={(e) => {
+                const handleMouseMove = (moveEvent) => handleSliderChange(moveEvent, 'upper');
+                const handleMouseUp = () => {
+                  document.removeEventListener('mousemove', handleMouseMove);
+                  document.removeEventListener('mouseup', handleMouseUp);
+                };
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+              }}
+            />
+
+            {/* Empty div for height */}
+            <div className="w-full h-2" />
+          </div>
+
+          {/* Scale markers */}
+          <div className="flex justify-between px-2">
+            {[...Array(11)].map((_, i) => (
+              <span key={i} className="text-sm text-gray-600">{i}</span>
+            ))}
+          </div>
+
+          {/* Status text */}
+          <div className="flex justify-between text-sm font-medium">
+            <span className="text-gray-500">Lower wellness levels</span>
+            <span className="text-green-600">Healthy</span>
+            <span className="text-orange-500">Optimal</span>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -307,44 +404,7 @@ const AccountBilling = () => {
           </div>
         </div>
 
-        {/* Wellness360 */}
-        <div>
-          <h3 className="text-lg font-medium mb-4">Wellness</h3>
-          <div className="space-y-4">
-            <div className="relative pt-1">
-              <input
-                type="range"
-                min="0"
-                max="10"
-                value={wellnessValue}
-                onChange={(e) => setWellnessValue(parseInt(e.target.value))}
-                className="w-full appearance-none h-1 rounded-full bg-gray-300"
-                style={{
-                  background: `linear-gradient(to right, 
-                    #ef4444 0%, #ef4444 40%, 
-                    #22c55e 40%, #22c55e 70%, 
-                    #f97316 70%, #f97316 100%)`
-                }}
-              />
-              <div 
-                className="absolute w-4 h-4 bg-white rounded-full border-2 border-gray-400 -mt-1.5"
-                style={{
-                  left: `${(wellnessValue / 10) * 100}%`,
-                  transform: 'translateX(-50%)',
-                  top: '0.25rem'
-                }}
-              />
-            </div>
-            <div className="flex justify-between px-2">
-              {[...Array(11)].map((_, i) => (
-                <span key={i} className="text-sm text-gray-600">{i}</span>
-              ))}
-            </div>
-            <div className="text-center font-medium" style={{ color: getWellnessColor(wellnessValue) }}>
-              {wellnessValue <= 4 ? "Underutilized" : wellnessValue <= 7 ? "Healthy" : "Overworked"}
-            </div>
-          </div>
-        </div>
+        {renderWellness360()}
 
         <div className="flex justify-end">
           <button

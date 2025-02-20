@@ -10,39 +10,36 @@ const UserTable = ({ users }) => {
   }
 
   return (
-    <div className="w-full overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-      <div className="inline-block min-w-full align-middle">
-        <table className="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr className="bg-gray-50">
+    <div className="w-full h-[600px] overflow-hidden">
+      <div className="w-full h-full overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-300 table-auto">
+          <thead className="sticky top-0 bg-gray-50 z-10">
+            <tr>
               {[
-                { key: 'avatar', label: 'Avatar', width: '60px', className: 'sm:w-[60px]' },
-                { key: 'name', label: 'Name', width: '150px', className: 'sm:w-[150px]' },
-                { key: 'username', label: 'Username', width: '200px', className: 'hidden md:table-cell md:w-[200px]' },
-                { key: 'email', label: 'Email', width: '200px', className: 'hidden lg:table-cell lg:w-[200px]' },
-                { key: 'role', label: 'Role', width: '120px', className: 'hidden sm:table-cell sm:w-[120px]' },
-                { key: 'lastActive', label: 'Last Active', width: '150px', className: 'hidden xl:table-cell xl:w-[150px]' },
-                { key: 'screenshots', label: 'Screenshots', width: '120px', className: 'hidden lg:table-cell lg:w-[120px]' },
-                { key: 'department', label: 'Department', width: '150px', className: 'hidden xl:table-cell xl:w-[150px]' },
-                { key: 'manager', label: 'Manager', width: '150px', className: 'hidden xl:table-cell xl:w-[150px]' },
-                { key: 'applicationMode', label: 'Application Mode', width: '150px', className: 'hidden xl:table-cell xl:w-[150px]' },
-                { key: 'status', label: 'Status', width: '100px', className: 'sm:w-[100px]' }
+                { key: 'avatar', label: 'Avatar', className: 'sm:w-[60px]' },
+                { key: 'name', label: 'Name', className: 'sm:w-[150px]' },
+                { key: 'username', label: 'Username', className: 'hidden md:table-cell md:w-[200px]' },
+                { key: 'email', label: 'Email', className: 'hidden lg:table-cell lg:w-[200px]' },
+                { key: 'role', label: 'Role', className: 'hidden sm:table-cell sm:w-[120px]' },
+                { key: 'lastActive', label: 'Last Active', className: 'hidden xl:table-cell xl:w-[150px]' },
+                { key: 'screenshots', label: 'Screenshots', className: 'hidden lg:table-cell lg:w-[120px]' },
+                { key: 'department', label: 'Department', className: 'hidden xl:table-cell xl:w-[150px]' },
+                { key: 'manager', label: 'Manager', className: 'hidden xl:table-cell xl:w-[150px]' },
+                { key: 'applicationMode', label: 'Application Mode', className: 'hidden xl:table-cell xl:w-[150px]' },
+                { key: 'status', label: 'Status', className: 'sm:w-[100px]' }
               ].map(({ key, label, className }) => (
                 <th
                   key={key}
-                  className={`sticky top-0 py-3.5 px-3 text-left text-sm font-semibold text-gray-900 ${className}`}
+                  className={`py-3.5 px-3 text-left text-sm font-semibold text-gray-900 ${className}`}
                 >
                   {label}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
+          <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
             {users.map((user) => (
-              <tr 
-                key={user.id}
-                className="hover:bg-gray-50 transition-colors"
-              >
+              <tr key={user.id} className="hover:bg-gray-50 transition-colors">
                 <td className="whitespace-nowrap py-4 pl-4 pr-3">
                   <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                     {user.avatar ? (
